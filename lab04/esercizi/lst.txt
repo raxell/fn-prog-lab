@@ -66,6 +66,8 @@ abbia zero, uno,  almeno due  elementi.
 
 _________________________________________________________________________________
 
+2.3
+---
 
 Definire la funzione 
 
@@ -85,7 +87,7 @@ let s2 = split ["ciao"] ;;
 let s3 = split ["ciao" ; "ciao!!!" ] ;; 
 //val s3 : string list * string list = (["ciao"], ["ciao!!!"])
 
-let s4 = split [ 'a' .. 'k'] 
+let s4 = split [ 'a' .. 'k'] ;;
 // val s4 : char list * char list = (['a'; 'c'; 'e'; 'g'; 'i'; 'k'], ['b'; 'd'; 'f'; 'h'; 'j'])
 
 Suggerimento

@@ -1,3 +1,4 @@
+// Es 2.1
 let rec rmEven ls =
     match ls with
     | [] -> []
@@ -6,13 +7,21 @@ let rec rmEven ls =
         | 0 -> rmEven tl
         | _ -> hd :: rmEven tl
 
+// Es 2.2
 let rec rmOddPos ls =
     match ls with
     | [] -> []
     | [hd] -> [hd]
     | hd1 :: hd2 :: tl -> hd1 :: rmOddPos tl
 
-let rec split ls = [],[]
+// Es 2.3
+let rec split ls =
+    match ls with
+    | [] -> ([], [])
+    | [hd] -> ([hd], [])
+    | hd1 :: hd2 :: tl ->
+        let (even, odd) = split tl
+        (hd1 :: even, hd2 :: odd)
 
 let rec cmpLength (ls0,ls1) = 0
 
