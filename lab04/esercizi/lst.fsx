@@ -23,7 +23,13 @@ let rec split ls =
         let (even, odd) = split tl
         (hd1 :: even, hd2 :: odd)
 
-let rec cmpLength (ls0,ls1) = 0
+// Es 2.4
+let rec cmpLength x =
+    match x with
+    | ([], []) -> 0
+    | (hd :: tl, []) -> 1
+    | ([], hd :: tl) -> -1
+    | (hd0 :: tl0, hd1 :: tl1) -> cmpLength (tl0, tl1)
 
 let rec remove (x, ls) = []
 

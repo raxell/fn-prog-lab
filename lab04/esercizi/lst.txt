@@ -18,8 +18,8 @@ ISTRUZIONI PER LA CORREZIONE AUTOMATICA
 ESERCIZI SU LISTE
 =================
 
-2.1
----
+Es 2.1
+------
 
 Definire la funzione ricorsiva
 
@@ -38,8 +38,8 @@ let rm2 = rmEven [2; 5; 5; 6; 6; 87; 6; 100; 2] ;;
 
 ______________________________________________________________________________
 
-2.2
----
+Es 2.2
+------
 
 Definire la funzione ricorsiva
 
@@ -66,8 +66,8 @@ abbia zero, uno,  almeno due  elementi.
 
 _________________________________________________________________________________
 
-2.3
----
+Es 2.3
+-----
 
 Definire la funzione 
 
@@ -98,6 +98,8 @@ Usare uno schema di pattern matching simile a quello dell'esercizio precedente.
 
 _________________________________________________________________________________
 
+Es 2.4
+------
 
 Definire la funzione ricorsiva 
 
@@ -116,7 +118,7 @@ Esempi:
 
 let c1 = cmpLength ( [1 .. 10] , ['a' .. 'z'] ) ;; // -1
 let c2 = cmpLength ( [1 .. 26] , ['a' .. 'z'] ) ;; // 0
-let c3 = cmpLength ( ['a'; 'b';'c'] ,["e" ; "f"]) ; // 1 
+let c3 = cmpLength ( ['a'; 'b';'c'] ,["e" ; "f"]) ;; // 1 
 
 
 Suggerimento
