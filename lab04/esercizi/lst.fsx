@@ -6,7 +6,11 @@ let rec rmEven ls =
         | 0 -> rmEven tl
         | _ -> hd :: rmEven tl
 
-let rec rmOddPos ls = []
+let rec rmOddPos ls =
+    match ls with
+    | [] -> []
+    | [hd] -> [hd]
+    | hd1 :: hd2 :: tl -> hd1 :: rmOddPos tl
 
 let rec split ls = [],[]
 
