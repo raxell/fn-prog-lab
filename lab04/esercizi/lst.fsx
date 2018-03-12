@@ -45,6 +45,13 @@ let rec removeDup ls =
     | [] -> []
     | hd :: tl -> hd :: removeDup (remove (hd, tl))
 
-let rec downto0 n = []
+// Es 2.6
+let rec downto0 n =
+    match n with
+    | 0 -> [0]
+    | x -> x :: downto0 (n - 1)
 
-let rec upto n = []
+let rec upto n =
+    match n with
+    | 0 -> [0]
+    | x -> upto (n - 1) @ [x]

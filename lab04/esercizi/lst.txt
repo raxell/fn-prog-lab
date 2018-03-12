@@ -168,6 +168,8 @@ let ls5 = removeDup  [ "mele" ; "uva" ; "mele" ; "pere" ; "uva" ; "banane" ; "uv
 
 _______________________________________________________________________________
 
+Es 2.6
+------
 
 Definire le funzioni  ricorsive
 
