@@ -128,6 +128,8 @@ Definire un opportuno pattern matching sulla coppia (ls0,ls1)
 
 _____________________________________________________________
 
+Es 2.5
+------
 
 Definire la funzione ricorsiva
 

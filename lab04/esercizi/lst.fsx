@@ -31,9 +31,19 @@ let rec cmpLength x =
     | ([], hd :: tl) -> -1
     | (hd0 :: tl0, hd1 :: tl1) -> cmpLength (tl0, tl1)
 
-let rec remove (x, ls) = []
+// Es 2.5
+let rec remove (x, ls) =
+    match ls with
+    | [] -> []
+    | hd :: tl ->
+        match hd = x with
+        | true -> remove (x, tl)
+        | _ -> hd :: remove (x, tl)
 
-let rec removeDup ls =  []
+let rec removeDup ls =
+    match ls with
+    | [] -> []
+    | hd :: tl -> hd :: removeDup (remove (hd, tl))
 
 let rec downto0 n = []
 
