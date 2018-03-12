@@ -1,0 +1,282 @@
+// LEZIONE 3: LET + RIC
+
+
+// let globale
+let x = 3;;
+
+
+
+
+
+ // globale + locale
+// verbose: 
+//  LET id = exp IN exp
+
+let x1 =
+    let y = 5 in  y * y ;;
+
+//  y;;
+// The value or constructor 'y' is not defined
+
+
+
+// in caso di ri-uso dello stesso nome in let locale, fa testo il legame globale
+
+x;;
+
+let x = 22 in x * x;;
+
+x;;
+
+// let multipli = dichiarazioni
+
+let x3 =
+    let y = sin 4.
+    let z =  cos (float x1)
+    y + z;;
+
+// più noioso in verbose    (nota indentazione per il lettore)
+
+let x4 =
+    let y = sin 4. in
+       let z = cos (float x1) in
+         y + z;;
+
+// shadowing:
+
+let w = 1
+
+// nota warning di Intellisense
+let w = 10
+
+let r = w * w
+//il vecchio valore è dimenticato, "ombreggiato" da quello più recente
+
+// --- INTERMEZZO ------------
+
+(*
+In FP esiste il condizionale if - then - else
+
+Notate che sono obbligatori tutti e due i rami e che devono ovviamente avere lo stesso tipo
+*)
+
+let mynot p =
+    if p then false else true
+
+(* Inutile e pessimo stile scrivere
+
+let mynot' p =
+    if p = true then false else true
+   *)
+
+(*
+ATTENZIONE: esiste anche if-then, ma vale solo per le computazioni imperative
+che ritornano unit: 
+   *)
+
+let fu x =
+    if x then printfn "non ritorno un valore"
+
+(* Notate il tipo  f : bool -> unit
+
+Ve lo segnalo ora nel caso facciate qualcosa del genere 
+
+let wrong x =
+    if x then 1
+e non capiate l'errore
+    This expression was expected to have type
+    unit    
+but here has type
+    int
+    *)
+
+// --- FINE INTERMEZZO ------------
+
+
+/// BACK TO SLIDES per PM
+
+// Nota: let e PM
+
+let f e =
+  let x,y = e in x + y
+
+let f' e =
+  match e with
+    x,y -> x + y
+
+// quest'ultima è la forma "primitiva"
+
+
+(* 
+
+Quindi posso fare PM su arbitrarie espressioni complesse,
+a patto che si valutino a un valore che ammetta PM
+
+*)
+
+let p (n, m) =
+    match (n > m) with
+        true -> 1
+        | _ -> 0
+
+// PM sui floats
+let ff n =
+    match n with
+        3.14 -> true
+        | _ -> false    
+
+(* Quindi if then else si puo ridurre a PM*)
+
+let pif (test, e1, e2) =
+    match test with
+        true ->  e1
+        | false -> e2
+
+let eq(n,m) =
+    (if n > m then 100 else 42) = pif(n>m,100,42)        
+
+(* e si capisce perché devo avere ambo i rami -- altrimenti PM incompleto *)
+
+(* Linearità dei pattern: supponiamo devo definire una funzione su
+coppie  che rimplementa uguaglianza (esempio idiota, ma conta idea):
+
+f(x,x) = true
+f(_)   = false
+
+Il tentativo
+
+let fid(p) =
+    match p with
+        x,x -> true
+        |_ -> false
+
+
+>>>>  error FS0038: 'x' is bound twice in this pattern
+
+Non va, che pattern non possono avere ripetizioni        
+
+Usate if then else
+*)
+let fid(p) =
+    match p with
+        x,y -> if x = y then true else false
+
+// vi è un altra tecnica (clausole when) che vediamo in seguito
+    
+// %%%%%%%%%%%%  RICORSIONE
+
+(*
+
+Dato un intero n >= 0,  n! (fattoriale di n) puo' essere definito ricorsivamente
+nel modo seguente:
+
+n!   =  0                              se  n = 0
+
+     =  1 * 2 * ... * (n-1) * n         se  n > 0
+
+Questo genera una "formula di ricorsione"
+
+n!   =  1                   se  n = 0
+
+     =  n  * (n-1)!         se  n > 0
+
+
+- caso base e caso passo
+
+- in questo caso terminante (è ricorsione primitiva), ma in generale
+  terminazione indecidibile
+
+
+Esempio
+
+3! 
+   = 3 · (3 − 1)!
+   = 3 · (2)!
+   = 3 · 2 · (2 − 1)!
+   = 3 · 2 · 1 · (1 − 1)!
+   = 3 · 2 · 1 · 1
+   = 6
+
+La traduzione in codice è immediata, si noti il let rec
+
+   *)
+
+let rec fact m =
+    match m with
+        | 0 -> 1
+        | n -> n * fact ( n-1 );;
+
+
+// ricordatevi che l'ordine delle pattern (cronologico) conta: 
+
+let rec fact' m =
+    match m with
+        | n -> n * fact' ( n-1 )
+        | 0 -> 1
+
+// notate il warning: cosa succede se eseguo fact' 2 ?
+
+
+
+(* funzioni ricorsive con più argomenti:
+
+   2)  Dato un float x e un intero n >= 0,  la funzione esponenziale puo'
+essere definita ricorsivamente come:
+
+x^n  = 1.0              se n = 0 
+
+    =  x * x^(n-1)    se n > 0
+
+*)
+
+let rec exp ( bse, m ) =
+    match m with
+        | 0  -> 1.
+        | n  ->  bse *  exp (bse, n-1);;
+
+
+(* Altri esempi semplici:
+
+Definire una funzione ricorsiva
+
+make_str : int -> string
+
+che, dato un intero n>=0, restituisce la stringa "0 1 2 ... n"
+
+
+make_str 20;; 
+  = "0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"
+ 
+*)
+
+let rec make_str m = 
+    match m with
+    | 0 -> string 0 
+    | n -> make_str ( n - 1) + " " +  (string n);;
+    
+(* una variante che costruisce una **coppia** (int,string)
+
+ mkpair : x:int -> int * string
+
+ Notate la costruzione della chiamata ricorsiva con un pattern
+ matching per ottenere una coppia in uscita
+
+ *)
+ 
+let rec mkpair x =
+    match x with
+        | 0 -> 0,string 0
+        | n ->
+            let (k,s) = mkpair (n - 1)
+            k + n, s+ string n
+
+//  mkpair 5  = (15, "543210")
+
+
+// con PM esplicito
+let rec mkpairpm x =
+    match x with
+        | 0 -> 0,string 0
+        | n ->
+            match mkpairpm (n - 1) with
+                k,s ->  k + n, s+ string n

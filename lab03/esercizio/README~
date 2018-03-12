@@ -1,0 +1,11 @@
+ISTRUZIONI PER LA CORREZIONE AUTOMATICA di IVA
+
+- usare il vostro file che *DEVE* chiamarsi iva.fsx
+
+
+- assicurarsi che tutte le funzioni compilino
+  - se non sapete risolvere un esercizio, lasciate il valore di default
+
+- dal terminale eseguite
+    
+    fsharpi check-iva.fsx

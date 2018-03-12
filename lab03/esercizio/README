@@ -1,0 +1,13 @@
+ISTRUZIONI PER LA CORREZIONE AUTOMATICA di ric
+
+- usare il file  ric.fsx che vi è stato dato e *NON* cambiate nessun nome
+
+
+- assicurarsi che tutte le funzioni compilino
+  - se non sapete risolvere un esercizio, lasciate il valore di default (qui 42)
+
+- dal terminale eseguite
+    
+    fsharpi check-ric.fsx
+
+- se vedete "OK 100 test run" è giusto, altrimento troverete un controesempio
