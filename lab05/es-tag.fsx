@@ -17,3 +17,10 @@ let areaOpt fig =
     | Triangolo(b, h) when b >= 0. && h >= 0. -> Some (area fig)
     | _ -> None
 
+// Es. 5.2
+let printArea fig =
+    let areaFig = areaOpt fig
+    match areaFig with
+    | Some x -> "area: " + string x
+    | None -> "la figura non e' ben definita"
+
