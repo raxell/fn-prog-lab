@@ -24,3 +24,9 @@ let printArea fig =
     | Some x -> "area: " + string x
     | None -> "la figura non e' ben definita"
 
+// Es. 5.3
+let sommaArea (fig1, fig2) =
+    match (areaOpt fig1, areaOpt fig2) with
+    | (Some x, Some y) -> Some (x + y)
+    | _ -> None
+
