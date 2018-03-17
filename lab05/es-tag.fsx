@@ -30,3 +30,12 @@ let sommaArea (fig1, fig2) =
     | (Some x, Some y) -> Some (x + y)
     | _ -> None
 
+// Es 5.4
+let rec sommaAreaList figs =
+    match figs with
+    | [] -> 0.
+    | hd :: tl ->
+        match areaOpt hd with
+        | Some x -> x + (sommaAreaList tl)
+        | _ -> 0. + (sommaAreaList tl)
+
