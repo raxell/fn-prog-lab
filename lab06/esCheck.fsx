@@ -35,3 +35,14 @@ let prop_halved xs =
     rmOddPos xs |> List.length = (List.length xs + 1) / 2
 
 do Check.Quick prop_halved
+
+// downto0 check
+let rec downto0 n =
+    match n with
+    | 0 -> [0]
+    | x -> x :: downto0 (n - 1)
+
+let prop_eqRange n =
+    n >= 0 ==> lazy (downto0 n = [n .. -1 .. 0])
+
+do Check.Quick prop_eqRange
