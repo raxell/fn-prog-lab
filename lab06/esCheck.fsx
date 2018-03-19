@@ -23,3 +23,15 @@ let prop_oddsOnly xs =
     rmEven xs |> containsOddsOnly
 
 do Check.Quick prop_oddsOnly
+
+// 1.2
+let rec rmOddPos ls =
+    match ls with
+    | [] -> []
+    | [hd] -> [hd]
+    | hd1 :: hd2 :: tl -> hd1 :: rmOddPos tl
+
+let prop_halved xs =
+    rmOddPos xs |> List.length = (List.length xs + 1) / 2
+
+do Check.Quick prop_halved
