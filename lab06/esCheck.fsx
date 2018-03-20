@@ -1,5 +1,4 @@
 ﻿#r "FsCheck";;
-#r "FsCheck";;
 open FsCheck;;
 
 // 1.1
@@ -35,6 +34,27 @@ let prop_halved xs =
     rmOddPos xs |> List.length = (List.length xs + 1) / 2
 
 do Check.Quick prop_halved
+
+// 1.3
+let rec split ls =
+    match ls with
+    | [] -> ([], [])
+    | [hd] -> ([hd], [])
+    | hd1 :: hd2 :: tl ->
+        let (even, odd) = split tl
+        (hd1 :: even, hd2 :: odd)
+
+let rec merge (xs, ys) =
+    match (xs, ys) with
+    | ([], []) -> []
+    | (hd :: tl, []) -> [hd]
+    | ([], hd :: tl) -> [hd]
+    | (hd0 :: tl0, hd1 :: tl1) -> hd0 :: hd1 :: merge (tl0, tl1)
+
+let prop_inverse xs =
+    split xs |> merge = xs
+
+do Check.Quick prop_inverse
 
 // downto0 check
 let rec downto0 n =
