@@ -35,6 +35,13 @@ let prop_halved xs =
 
 do Check.Quick prop_halved
 
+// Subset check
+let prop_subset f xs =
+    Set.isSubset (f xs |> Set.ofList) (Set.ofList xs)
+
+do Check.Quick (prop_subset rmEven)
+// do Check.Quick (prop_subset rmOddPos)
+
 // 1.3
 let rec split ls =
     match ls with
