@@ -41,3 +41,14 @@ let rec search (x, bTree) =
     match bTree with
     | Null -> false
     | Node(y, left, right) -> x = y || search (x, left) || search (x, right)
+
+let rec contains (x, xs) =
+    match xs with
+    | [] -> false
+    | hd :: tl -> hd = x || contains (x, tl)
+
+let prop_search (x, bTree) =
+    search (x, bTree) = contains (x, inorderToList bTree)
+
+do Check.Quick prop_search
+
