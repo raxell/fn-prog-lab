@@ -25,3 +25,8 @@ let rec inorderToList bTree =
     match bTree with
     | Null -> []
     | Node(x, left, right) -> (inorderToList left) @ x :: (inorderToList right)
+
+let rec preorderToList bTree =
+    match bTree with
+    | Null -> []
+    | Node(x, left, right) -> x :: (inorderToList left) @ (inorderToList right)
