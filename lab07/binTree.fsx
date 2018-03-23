@@ -30,3 +30,8 @@ let rec preorderToList bTree =
     match bTree with
     | Null -> []
     | Node(x, left, right) -> x :: (inorderToList left) @ (inorderToList right)
+
+let prop_sameElements (t1: int binTree) =
+    (inorderToList t1 |> List.sort) = (preorderToList t1 |> List.sort)
+
+do Check.Quick prop_sameElements
