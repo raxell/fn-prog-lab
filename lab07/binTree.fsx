@@ -35,3 +35,9 @@ let prop_sameElements (t1: int binTree) =
     (inorderToList t1 |> List.sort) = (preorderToList t1 |> List.sort)
 
 do Check.Quick prop_sameElements
+
+// 1.3
+let rec search (x, bTree) =
+    match bTree with
+    | Null -> false
+    | Node(y, left, right) -> x = y || search (x, left) || search (x, right)
