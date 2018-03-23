@@ -13,3 +13,9 @@ let t9 = Node(9, Null, Node (12, Null, Null))
 let t6 = Node(6, t9, Null)
 let t3 = Node(3, t5, t6)
 let t1 = Node(1, t2, t3)
+
+// 1.1
+let rec intToFloatTree bTree =
+    match bTree with
+    | Node(x, left, right) -> Node(float x, intToFloatTree left, intToFloatTree right)
+    | Null -> Null
