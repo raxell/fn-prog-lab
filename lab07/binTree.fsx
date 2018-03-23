@@ -19,3 +19,9 @@ let rec intToFloatTree bTree =
     match bTree with
     | Node(x, left, right) -> Node(float x, intToFloatTree left, intToFloatTree right)
     | Null -> Null
+
+// 1.2
+let rec inorderToList bTree =
+    match bTree with
+    | Null -> []
+    | Node(x, left, right) -> (inorderToList left) @ x :: (inorderToList right)
