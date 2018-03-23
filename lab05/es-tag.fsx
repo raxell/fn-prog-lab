@@ -36,5 +36,5 @@ let rec sommaAreaList figs =
     | hd :: tl ->
         match areaOpt hd with
         | Some x -> x + (sommaAreaList tl)
-        | _ -> 0. + (sommaAreaList tl)
+        | _ -> sommaAreaList tl
 
