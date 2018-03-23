@@ -19,8 +19,7 @@ let areaOpt fig =
 
 // Es. 5.2
 let printArea fig =
-    let areaFig = areaOpt fig
-    match areaFig with
+    match areaOpt fig with
     | Some x -> "area: " + string x
     | None -> "la figura non e' ben definita"
 
