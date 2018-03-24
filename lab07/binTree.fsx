@@ -75,3 +75,10 @@ let rec count bTree =
         | true -> (1 + lNodes + rNodes, 1 + lLeaves + rLeaves)
         | _ -> (1 + lNodes + rNodes, lLeaves + rLeaves)
 
+// 1.6
+let rec depthToList (n, bTree) =
+    match (n, bTree) with
+    | (_, Null) -> []
+    | (0, Node(x, _, _)) -> [x]
+    | (_, Node(_, l, r)) -> depthToList (n - 1, l) @ depthToList (n - 1, r)
+
