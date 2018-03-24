@@ -52,3 +52,15 @@ let prop_search (x, bTree) =
 
 do Check.Quick prop_search
 
+// 1.4
+let rec filterToList (f, bTree) =
+    match bTree with
+    | Null -> []
+    | Node(x, left, right) ->
+        match f x with
+        | true -> filterToList (f, left) @ x :: filterToList (f, right)
+        | _ -> filterToList (f, left) @ filterToList (f, right)
+
+let isEven x = x % 2 = 0
+let isSmall x = x < 5
+
