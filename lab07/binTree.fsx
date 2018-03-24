@@ -64,3 +64,14 @@ let rec filterToList (f, bTree) =
 let isEven x = x % 2 = 0
 let isSmall x = x < 5
 
+// 1.5
+let rec count bTree =
+    match bTree with
+    | Null -> (0, 0)
+    | Node(x, left, right) ->
+        let (lNodes, lLeaves) = count left
+        let (rNodes, rLeaves) = count right
+        match left = Null && right = Null with
+        | true -> (1 + lNodes + rNodes, 1 + lLeaves + rLeaves)
+        | _ -> (1 + lNodes + rNodes, lLeaves + rLeaves)
+
