@@ -82,3 +82,15 @@ let rec depthToList (n, bTree) =
     | (0, Node(x, _, _)) -> [x]
     | (_, Node(_, l, r)) -> depthToList (n - 1, l) @ depthToList (n - 1, r)
 
+// 1.7
+type direction = L | R
+
+let rec runPath (path,  bTree) =
+    match (path, bTree) with
+    | ([], Node(x, _, _)) -> Some x
+    | (hd :: tl, Node(_, l, r)) ->
+        match hd with
+        | L -> runPath (tl, l)
+        | R -> runPath (tl, r)
+    | _ -> None
+
