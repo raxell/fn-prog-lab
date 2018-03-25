@@ -115,3 +115,11 @@ let intTree = insertFromList (intList, Null)
 let strTree1 = insertFromList (strList1, Null)
 let strTree2 = insertFromList (strList2, strTree1)
 
+// 2.2
+let rec search1 (x, bTree) =
+    match bTree with
+    | Node(y, _, _) when x = y -> true
+    | Node(y, l, _) when x < y -> search1 (x, l)
+    | Node(y, _, r) when x > y -> search1 (x, r)
+    | _ -> false
+
