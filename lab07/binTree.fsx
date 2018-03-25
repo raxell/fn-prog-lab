@@ -102,3 +102,9 @@ let rec insert (x, bTree) =
     | Node(y, l, r) when x > y -> Node(y, l, insert (x, r))
     | _ -> bTree
 
+// 2.1 ii)
+let rec insertFromList (ls, bTree) =
+    match ls with
+    | [] -> bTree
+    | hd :: tl -> insertFromList (tl, insert (hd, bTree))
+
