@@ -94,3 +94,11 @@ let rec runPath (path,  bTree) =
         | R -> runPath (tl, r)
     | _ -> None
 
+// 2.1 i)
+let rec insert (x, bTree) =
+    match bTree with
+    | Null -> Node(x, Null, Null)
+    | Node(y, l, r) when x < y -> Node(y, insert (x, l), r)
+    | Node(y, l, r) when x > y -> Node(y, l, insert (x, r))
+    | _ -> bTree
+
