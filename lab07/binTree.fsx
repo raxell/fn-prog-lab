@@ -123,3 +123,10 @@ let rec search1 (x, bTree) =
     | Node(y, _, r) when x > y -> search1 (x, r)
     | _ -> false
 
+// 2.3
+let rec min bTree =
+    match bTree with
+    | Node(x, l, _) when l = Null -> Some x
+    | Node(x, l, _) when l <> Null -> min l
+    | _ -> None
+
