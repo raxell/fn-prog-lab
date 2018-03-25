@@ -88,10 +88,8 @@ type direction = L | R
 let rec runPath (path,  bTree) =
     match (path, bTree) with
     | ([], Node(x, _, _)) -> Some x
-    | (hd :: tl, Node(_, l, r)) ->
-        match hd with
-        | L -> runPath (tl, l)
-        | R -> runPath (tl, r)
+    | (hd :: tl, Node(_, l, _)) when hd = L -> runPath (tl, l)
+    | (hd :: tl, Node(_, _, r)) when hd = R -> runPath (tl, r)
     | _ -> None
 
 // 2.1 i)
