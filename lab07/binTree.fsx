@@ -138,3 +138,11 @@ let rec subtree (x, bTree) =
     | Node(y, _, r) when x > y -> subtree (x, r)
     | _ -> Null
 
+// 2.5
+let rec searchPath (x, bTree) =
+    match bTree with
+    | Node(y, _, _) when x = y -> [y]
+    | Node(y, l, _) when x < y && searchPath (x, l) <> [] -> y :: searchPath (x, l)
+    | Node(y, _, r) when x > y && searchPath (x, r) <> [] -> y :: searchPath (x, r)
+    | _ -> []
+
