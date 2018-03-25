@@ -106,3 +106,12 @@ let rec insertFromList (ls, bTree) =
     | [] -> bTree
     | hd :: tl -> insertFromList (tl, insert (hd, bTree))
 
+// 2.1 iii)
+let intList = [20; 10; 60; 15; 40; 100; 30; 50; 70; 35; 42; 58; 75; 32; 37]
+let strList1 = ["pesca"; "banana"; "uva"; "albicocca"; "nocciola"; "ribes"]
+let strList2 = ["limone"; "ciliegia"; "mela"; "pera"; "noce"]
+
+let intTree = insertFromList (intList, Null)
+let strTree1 = insertFromList (strList1, Null)
+let strTree2 = insertFromList (strList2, strTree1)
+
