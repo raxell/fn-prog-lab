@@ -130,3 +130,11 @@ let rec min bTree =
     | Node(x, l, _) when l <> Null -> min l
     | _ -> None
 
+// 2.4
+let rec subtree (x, bTree) =
+    match bTree with
+    | Node(y, _, _) when x = y -> bTree
+    | Node(y, l, _) when x < y -> subtree (x, l)
+    | Node(y, _, r) when x > y -> subtree (x, r)
+    | _ -> Null
+
