@@ -17,3 +17,9 @@ let rec valutaList ls =
     | [] -> []
     | hd :: tl -> valuta hd :: valutaList tl
 
+// Es 3
+let rec creaValList (s, v) =
+    match (s, v) with
+    | (hd0 :: tl0, hd1 :: tl1) -> { studente = hd0; voto = hd1 } :: creaValList (tl0, tl1)
+    | _ -> []
+
