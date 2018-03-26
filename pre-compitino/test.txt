@@ -1,0 +1,255 @@
+Il seguente test si compone di due esercizi, che verrano corretti a
+alto livello, ma non valutati.
+
+La sessione di consegna rimarra' aperta fino a Giovedì 29 alle 23.  E'
+possibile caricare piu' copie dello stesso file e anche scaricare il
+materiale consegnato.  Verra' guardata solamente l'ultima versione dei
+file consegnati.
+
+I file contenente il codice vanno caricati alla pagina
+
+    https://upload.di.unimi.it/
+
+I file da caricare sono:
+
+esami.fsx  (esercizio 1) 
+stack.fsx  (esercizio 2) 
+
+Va inoltre caricato un file
+
+info.txt
+
+contenente le seguenti righe (da copiare e completare):
+
+NOME:
+
+COGNOME: 
+
+MATRICOLA:
+
+CORSO DI LAUREA:
+
+ANNO DI CORSO:
+
+Quali linguaggi di programmazione conosci?
+
+Hai seguito altri corsi con elementi di programmazione funzionale? Se
+si', indicare quale.
+
+===========================================================================
+
+Parte (A) ESAMI
+
+ESAMI
+====
+
+Una valutazione numerica e' una record con campi studente e voto
+e una valutazione a giudizio è una record  con campi studenti e
+giudizio, dove:
+
+- studente e giudizio sono stringhe;
+- voto un intero.
+
+0) Dare delle type definitions dei record
+
+type valV = ...
+type valG = ...
+
+1) Definire una funzione
+
+   valuta :  valV  ->   valG
+
+che, dato il nome di uno studente e il voto, restituisce il record con
+campi studente e giudizio, dove il giudizio e' definita secondo la seguente tabella:
+ 
+ meno di 18   --->        insufficiente   
+ da 18 a 22   --->        sufficiente  
+ da 23 a 27   --->        buono 
+ piu' di 27   --->        ottimo
+
+
+Esempio: se "Bianchi" ha voto 16, il record restituito contiene il
+campo "insufficiente"
+
+-------------------------------------------------------------------
+
+2)  Definire la funzione 
+
+ valutaList : valV list -> valG list
+
+che trasforma una lista di valutazioni numeriche
+in una lista di valutazioni a giudizio
+
+In questo caso si richiede di *NON* usare le funzioni nella
+collection List. 
+
+
+--------------------------------------------------------------------------
+
+3)  Definire  la funzione
+
+    creaValList : (string list * int list) -> valV list
+
+che, data una lista di studenti e una lista di voti, crea la lista dei record
+delle valutazioni (studente,voto).  Se le liste *non* hanno la stessa
+lunghezza, la parte in eccedenza non viene considerata.
+
+
+
+4) Definire la funzione
+
+   media : valV list -> float
+
+che data una lista di  record di valutazioni  calcola la media dei voti.
+
+La funzione può usare la definizione (possibilmente locale, cioè  al
+suo interno) di una  funzione 
+
+  sommaAndConta : valV list  -> int * int
+
+che, data una lista vList di record di valutazione studente e voto, calcola
+**simultaneamente** (cioe' in una unica passata) la coppia
+
+  (sommaVoti,count)
+
+dove sommaVoti e' la somma dei voti in vList e count il numero di
+valutazioni, cioe' la lunghezza in vList.
+
+
+
+
+5) Definire la funzione 
+
+ separa : valV list -> valV list * valV list
+
+che, data una lista di valutazioni numeriche , crea due liste di
+valutazioni numeriche, la lista dei bocciati (voto < 18) e la lista dei promossi
+(voto>= 18).
+
+- Definire una proprietà FsCheck che controlla che i record in
+  questione sono preservati da "separa".
+
+let ``due liste risultato hanno stessi elementi di vs`` vs =
+...
+
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% END
+
+STACK MACHINE
+
+Consider a simple calculator with instructions for addition,
+ multiplication and absolute value on integers.
+
+The instruction set of the calculator is modelled by the following F#
+type:
+
+type instr =
+  | ADD
+  | MULT
+  | PUSH of int
+  | ABS
+
+
+The calculator is a stack machine, where a stack is a list of integers.
+The execution of an instruction maps a stack to a new stack: the
+execution of ADD with stack 
+
+	  a b c · · · 
+
+yields a new stack: 
+
+       (b + a) c· · · , 
+
+where the top two elements a and b on the stack have been
+replaced by the single element (b + a). Similarly with regard to the
+instructions  MULT. 
+
+The execution of ABS, applies the corresponding function to the top
+ element of the stack. E.g. the execution of ABS with stack 
+
+a b c · · · 
+
+yields the new stack:
+
+abs(a) b c · · · .
+
+The execution of PUSH r with the stack
+
+a b c · · · 
+
+pushes r on top of the stack, i.e. the new stack is:
+
+r a b c · · · .   
+
+S.1 Declare a type  for representing the stack, and declare an F#
+function to interpret the execution of a **single** instruction:
+
+type stack = ST ...
+
+exec: stack -> instr -> stack. 
+
+S.2 A program for the calculator is a list of instructions 
+
+[i1 , i2 , . . . , in ]. 
+
+A program is executed by executing the instructions 
+i1 ,i2 , . . . ,  one after the other, in that order, starting with an
+empty stack. 
+
+The result of the execution is the top value of the stack when all
+instructions have been executed.
+
+Example: to perform abs(3 + -5), you run the following program
+
+	 [PUSH 3; PUSH -5; ADD; ABS]
+
+The result will be 2
+
+Declare a type for programs as lists of instructions and a F#
+   function to interpret the execution of a program:
+
+type program = PR ...
+
+run : program -> int
+
+
+S.3  Compilation
+
+Declare an F# function 
+
+trans:  exp -> program 
+
+where exp is the type for expression of before (**without** variables)
+
+The value of the expression (trans exp) is a program prg such
+that run(prg) gives the int value of
+
+Example:
+
+trans  (Abs(Sum(C 3, C -5))) == PUSH 3; PUSH 5; ADD; ABS
+
+S.3 Write a FSCheck property test to check this equivalence;
+if you compute (eval  exp) and (trans  exp) into prg and then (run prg),
+you get the same value.
+
+             eval
+  (exp) ------------>int
+   |	    	     /|\		    		    
+   |                 /
+   |trans	    /   run	
+   |		   /
+  \|/		  /
+   prog -------->/
+
+let prop_equiv (e : exp) = ...
+
+----------------------------------------
+
+S. 4 (Optional). This stack machine is inspired to the programming language
+FORTH. Extend the machine with the following command
+
+DUP    	 duplicates the top of the stack
+CMP	 compare the two elements on top of the stack and returns 1 or 0
+DROP	 discards the top of the stack;
+SWAP 	 exchanges the top 2 numbers.
+ITE	 do a if-then-else on the first three elements of the stack

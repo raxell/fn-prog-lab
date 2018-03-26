@@ -1,0 +1,17 @@
+NOME: Marco
+
+COGNOME: Comes
+
+MATRICOLA: 856807
+
+CORSO DI LAUREA: Informatica
+
+ANNO DI CORSO: Fuori corso
+
+Quali linguaggi di programmazione conosci?
+C, Java, Javascript/Flow, PHP
+
+Hai seguito altri corsi con elementi di programmazione funzionale? Se
+si', indicare quale.
+No
+
