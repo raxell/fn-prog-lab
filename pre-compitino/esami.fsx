@@ -23,3 +23,10 @@ let rec creaValList (s, v) =
     | (hd0 :: tl0, hd1 :: tl1) -> { studente = hd0; voto = hd1 } :: creaValList (tl0, tl1)
     | _ -> []
 
+// Es 4
+let media ls =
+    let f (sum, count) { voto = v } = (sum + v, count + 1)
+    match List.fold f (0, 0) ls with
+    | (sum, count) when count > 0 -> float sum / float count
+    | _ -> 0.
+
