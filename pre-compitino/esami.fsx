@@ -11,3 +11,9 @@ let valuta { studente = s; voto = v } =
     | x when x > 17 -> { r with giudizio = "sufficiente" }
     | _ -> { r with giudizio = "insufficiente" }
 
+// Es 2
+let rec valutaList ls =
+    match ls with
+    | [] -> []
+    | hd :: tl -> valuta hd :: valutaList tl
+
