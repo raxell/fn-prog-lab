@@ -1,3 +1,6 @@
+#r "FsCheck"
+open FsCheck
+
 // Es 0
 type valV = { studente: string; voto: int }
 type valG = { studente: string; giudizio: string }
@@ -29,4 +32,18 @@ let media ls =
     match List.fold f (0, 0) ls with
     | (sum, count) when count > 0 -> float sum / float count
     | _ -> 0.
+
+// Es 5
+let rec separa ls =
+    match ls with
+    | [] -> ([], [])
+    | hd :: tl  ->
+        let (b, p) = separa tl
+        if hd.voto < 18 then (hd :: b, p) else (b, hd :: p)
+
+let ``due liste risultato hanno stessi elementi di vs`` vs =
+    let (x, y) = separa vs
+    Set.ofList vs = Set.ofList (x @ y)
+
+do Check.Quick ``due liste risultato hanno stessi elementi di vs``
 
