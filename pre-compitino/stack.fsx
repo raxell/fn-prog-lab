@@ -1,3 +1,6 @@
+#r "FsCheck"
+open FsCheck
+
 type instr =
     | ADD
     | MULT
@@ -26,4 +29,30 @@ let run prog =
     match auxRun (ST([]), prog) with
     | ST([x]) -> x
     | _ -> failwith "invalid program"
+
+// Es S.3
+type exp =
+    | C of int
+    | Sum of exp * exp
+    | Prod of exp * exp
+    | Abs of exp
+
+let rec eval t  =
+    match t with
+    | C n         -> n
+    | Abs t      -> eval t |> abs
+    | Sum(t1,t2)  -> eval t1  + eval t2
+    | Prod(t1,t2) -> eval t1  * eval t2 ;;
+
+let rec trans e =
+    match e with
+    | C x -> PR([PUSH x])
+    | Sum(x, y) -> let (PR(r1), PR(r2)) = (trans x, trans y) in PR(r1 @ r2 @ [ADD])
+    | Prod(x, y) -> let (PR(r1), PR(r2)) = (trans x, trans y) in PR(r1 @ r2 @ [MULT])
+    | Abs x -> let (PR(r)) = trans x in PR(r @ [ABS])
+
+let prop_equiv (e: exp) =
+    trans e |> run = eval e
+
+do Check.Quick prop_equiv
 
