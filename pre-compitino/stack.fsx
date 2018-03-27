@@ -15,3 +15,15 @@ let exec s i =
     | (ABS, ST(op :: tl)) -> ST(abs op :: tl)
     | _ -> failwith "invalid stack"
 
+// Es S.2
+type program = PR of instr list
+
+let run prog =
+    let rec auxRun (s, p) =
+        match p with
+        | PR([]) -> s
+        | PR(i :: tl) -> auxRun (exec s i, PR(tl))
+    match auxRun (ST([]), prog) with
+    | ST([x]) -> x
+    | _ -> failwith "invalid program"
+
