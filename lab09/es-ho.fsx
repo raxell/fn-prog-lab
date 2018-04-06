@@ -4,3 +4,8 @@ let rec map f ls =
 	| [] -> []
 	| hd :: tl -> f hd :: map f tl
 
+// Es 9 2.2
+let l1 = [1..10]
+let l2 = map (fun x -> x * x) l1
+let l3 = map (fun x -> (x, if x % 2 = 0 then "pari" else "dispari")) l1
+
