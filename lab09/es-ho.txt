@@ -1,0 +1,260 @@
+ESERCIZIO 1	
+===========
+
+Consideriamo le definizioni
+
+let f = fun x -> x + 1 
+let g = fun x -> x  +1 
+
+Le funzioni f e g sono uguali?
+Cosa calcola g?
+
+Dare qualche esempio di termine t tale per cui l'applicazione
+
+  g t
+
+ha senso.
+
+** OSSERVAZIONE IMPORTANTE **
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+L'esercizio mostra che, diversamente da quanto avviene nei linguaggi imperativi,
+i termini
+
+   x + 1  
+   x  +1
+
+
+hanno un significato diverso.
+éuo' capitare di scrivere  il secondo al posto del primo!
+
+
+________________________________________________________________________________
+
+
+ESERCIZIO 2 (MAP)	
+=================
+
+2.1) Definire la funzione ricorsiva map tale che, 
+data una funzione f e una lista ls aventi tipo
+
+  f : 'a -> 'b      ls : 'a list
+
+il valore di
+ 
+   map f ls
+
+e' la lista di tipo 'b list ottenuta applicando a ogni elemento x di ls la funzione f.
+
+Quindi:
+
+ map  f [ x0 ; x1 ; .... ; xn ]   =   [ f x0 ; f x1 ; ... ; f xn ]
+
+Il tipo di map e':
+
+   map : ('a -> 'b) -> 'a list -> 'b list
+
+Notare che map e' una funzione higher-order.
+In F# e' gia' definita una analoga funzione List.map.
+
+L'intestazione di map deve essere:
+
+let rec map f ls = ....
+
+
+Notare che f e ls sono da intendersi come argomenti di map:
+- f   denota una generica funzione di tipo  'a -> 'b,
+- ls  denota una generica lista di tipo  'a list
+
+2.2) Sia l1 la lista contenente i numeri da 1 a 10.
+
+Applicando map a una opportuna funzione f e alla lista l1 costruire le seguenti liste
+(in entrambi i casi, scrivere la funzione f come funzione anonima):
+
+l2 =  [1; 4; 9; 16; 25; 36; 49; 64; 81; 100] // quadrati dei primi 10 numeri
+
+l3 = [(1, "dispari"); (2, "pari"); (3, "dispari"); (4, "pari"); (5, "dispari"); (6, "pari"); 
+      (7, "dispari"); (8, "pari"); (9, "dispari"); (10, "pari")]
+
+2.3) Consideriamo la lista
+
+let names = [ ("Mario", "Rossi") ; ("Anna Maria", "Verdi") ; ("Giuseppe", "Di Gennaro")]
+
+Applicando map a una opportuna funzione e alla lista names, costruire la lista
+ 
+names1 =  ["Dott. Mario Rossi"; "Dott. Anna Maria Verdi"; "Dott. Giuseppe Di Gennaro"]
+
+
+QuickCheck
+^^^^^^^^^^
+
+Definire e  verificare con QuickCheck le seguenti  proprieta' di map:
+
+
+i)    prop_map f (ls : int list)
+
+map e List.map calcolano gli stessi valori
+(piu' precisamente, le liste  'map f ls' e 'List.map f ls' sono uguali).
+
+ii)   prop_map_preserves_len f (ls :int list)
+
+La lista  'map f ls' ha la stessa lunghezza di ls
+(per calcolare la lunghezza di una lista si puo' usare List.length)
+
+Per usare QuickCheck:
+
+#r "FsCheck" 
+open FsCheck
+
+let property_to_check  =  ...  
+Check.Quick property_to_check   
+
+_____________________________________________________________________________________________
+
+
+ESERCIZIO 3  (FILTER)	
+=====================
+
+3.1) Definire la funzione ricorsiva filter tale che, 
+ data una funzione pred (predicato)  e una lista ls  aventi tipo
+
+  pred : 'a -> bool     ls :  'a list
+
+il  valore di
+
+   filter pred ls
+   
+e' la lista di tipo 'a list contenente gli elementi di ls che verificano pred.
+La lista risultante contiene quindi gli elementi x di ls tali che
+vale  'pred x'  (pred funge da filtro che conserva solo gli elementi che soddisfano pred).
+
+Il tipo di filter e':
+
+ filter: ('a -> bool) -> 'a list -> 'a list
+
+ed e'  una funzione higher-order.
+In F# e' definita una analoga funzione List.filter.
+
+
+3.2) Usando filter, definire la funzione
+
+   mult3 : int  -> int list
+
+che costruisce la lista dei multipli di 3 compresi fra 1 e n
+(applicare in modo opportuno filter sulla lista [1 .. n]).
+
+
+QuickCheck
+^^^^^^^^^^
+Definire e  verificare con QuickCheck le seguenti  proprieta' di filter:
+
+i) prop_filter pred (ls : int list) 
+
+filter e List.filter calcolano gli stessi valori.
+
+ii)  prop_filter_len pred (ls :int list)
+
+La lista  'filter pred ls' non puo' essere piu' lunga della lista ls.
+
+________________________________________________________________________
+
+
+ESERCIZIO 4 (PARTITION)	
+========================
+
+4.1) Definire la funzione ricorsiva partition analoga a filter in cui pero'
+
+   partition pred ls = ( lsTrue, lsFalse )
+
+dove:
+
+- lsTrue    contiene gli elementi di ls che verificano pred
+- lsFalse   contiene gli elementi di ls che non verificano pred
+
+Il tipo di partition e':
+
+   ('a -> bool) -> 'a list -> 'a list * 'a list
+
+In F# e' definita una  analoga funzione List.partition.
+
+4.2) Usando partition e le definizioni nell'esercizio precedente, costruire le coppie di liste
+
+p1 =  ( [3; 6; 9; 12; 15; 18] , [1; 2; 4; 5; 7; 8; 10; 11; 13; 14; 16; 17; 19; 20] )
+ //  ( multipli di 3 che sono <= 20, non-multipli di 3 che sono <= 20) 
+
+4.3) Usando partition, definire la funzione
+  
+   multNonmult3 : int -> int list * int list
+
+che, dato un intero n, partiziona la lista [1 .. n]  nella coppia di liste  
+
+    ( multipli di 3 , non-multipli di 3 ) 
+
+Ad esempio:
+
+ multNonmult3 16 =   ( [3; 6; 9; 12; 15] , [1; 2; 4; 5; 7; 8; 10; 11; 13; 14; 16] )
+
+QuickCheck
+^^^^^^^^^^
+
+Definire e  verificare con QuickCheck le seguenti  proprieta' di partition:
+
+i) prop_partition pred (ls : int list)
+
+partition e' equivalente a List.partition
+
+
+ii) prop_partition_len pred (ls : int list)
+
+Sia  (xs,ys) il risultato di 'partition pred ls'.
+Allora concatenando xs e ys si ottiene una lista avente la stessa lunghezza di ls.
+
+iii) prop_partition_app pred (ls :int list)
+
+Sia  (xs,ys) il risultato di 'partition pred ls'.
+Allora, concatenando xs e ys si ottiene una lista avente gli stessi elementi di ls.
+Per controllare che due liste contengano gli stessi elementi, puo' essere utile usare
+la funzione List.sort (ordina elementi di una lista).
+
+________________________________________________________________________________________
+
+
+ESERCIZIO 5 (NUMERI PRIMI)	
+=========================
+
+5.1) Definire la funzione 
+
+     divisori : int -> int list
+
+che, dato un intero n > 0, restituisce la lista dei suoi divisori;
+usare opportunamente la funzione filter (oppure List.filter).
+
+Esempio:
+
+ let d100 =  divisori 100 
+// val d100 : int list = [1; 2; 4; 5; 10; 20; 25; 50; 100]
+
+5.2) Usando la funzione divisori, definire la funzione isPrime che determina se un intero  e' primo.
+Notare che e' sufficiente scrivere una espressione booleana.
+
+Esempi:
+
+isPrime 10   // false
+isPrime 37   // true
+isPrime 2    // true
+isPrime 1    // false
+isPrime -37  // false
+
+5.3) Definire la funzione
+
+    primes : int -> int list
+
+che restituisce la lista dei numeri primi minori o uguali a un intero.
+
+Esempio:
+
+primes 10 //  [2; 3; 5; 7]
+
+primes 100
+//   [2; 3; 5; 7; 11; 13; 17; 19; 23; 29; 31; 37; 41; 43; 47;
+//    53; 59; 61; 67; 71; 73; 79; 83; 89; 97]
