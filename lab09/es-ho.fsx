@@ -58,3 +58,20 @@ let p1 = partition (fun x -> x % 3 = 0) [1..20]
 // Es 4.3
 let multNonmult3 n = partition (fun x -> x % 3 = 0) [1..n]
 
+let prop_partition pred (ls: int list) =
+    List.partition pred ls = partition pred ls
+
+do Check.Quick prop_partition
+
+let prop_partition_len pred (ls: int list) =
+    let (xs, ys) = partition pred ls
+    xs @ ys |> List.length = List.length ls
+
+do Check.Quick prop_partition_len
+
+let prop_partition_app pred (ls: int list) =
+    let (xs, ys) = partition pred ls
+    xs @ ys |> List.sort = List.sort ls
+
+do Check.Quick prop_partition_app
+
