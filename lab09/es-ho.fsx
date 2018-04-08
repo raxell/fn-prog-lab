@@ -75,3 +75,6 @@ let prop_partition_app pred (ls: int list) =
 
 do Check.Quick prop_partition_app
 
+// Es 5.1
+let divisori n = filter (fun x -> n % x = 0) [1..n]
+
