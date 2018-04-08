@@ -44,3 +44,11 @@ let prop_filter_len pred (ls: int list) =
 
 do Check.Quick prop_filter_len
 
+// Es 4.1
+let rec partition pred ls =
+    match ls with
+    | [] -> ([], [])
+    | hd :: tl ->
+        let (isTrue, isFalse) = partition pred tl
+        if pred hd then (hd :: isTrue, isFalse) else (isTrue, hd :: isFalse)
+
