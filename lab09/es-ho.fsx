@@ -78,3 +78,6 @@ do Check.Quick prop_partition_app
 // Es 5.1
 let divisori n = filter (fun x -> n % x = 0) [1..n]
 
+// Es 5.2
+let isPrime n = divisori n = [1; n]
+
