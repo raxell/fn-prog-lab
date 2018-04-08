@@ -25,3 +25,9 @@ let prop_map_preserve_len f (ls: int list) =
 
 do Check.Quick prop_map_preserve_len
 
+// Es 3.1
+let rec filter pred ls =
+    match ls with
+    | [] -> []
+    | hd :: tl -> let x = filter pred tl in if pred hd then hd :: x else x
+
