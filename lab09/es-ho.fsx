@@ -55,3 +55,6 @@ let rec partition pred ls =
 // Es 4.2
 let p1 = partition (fun x -> x % 3 = 0) [1..20]
 
+// Es 4.3
+let multNonmult3 n = partition (fun x -> x % 3 = 0) [1..n]
+
