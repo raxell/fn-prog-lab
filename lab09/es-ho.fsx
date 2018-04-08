@@ -52,3 +52,6 @@ let rec partition pred ls =
         let (isTrue, isFalse) = partition pred tl
         if pred hd then (hd :: isTrue, isFalse) else (isTrue, hd :: isFalse)
 
+// Es 4.2
+let p1 = partition (fun x -> x % 3 = 0) [1..20]
+
