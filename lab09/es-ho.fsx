@@ -31,3 +31,6 @@ let rec filter pred ls =
     | [] -> []
     | hd :: tl -> let x = filter pred tl in if pred hd then hd :: x else x
 
+// Es 3.2
+let mult3 n = filter (fun x -> x % 3 = 0) [1..n]
+
