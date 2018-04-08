@@ -34,3 +34,13 @@ let rec filter pred ls =
 // Es 3.2
 let mult3 n = filter (fun x -> x % 3 = 0) [1..n]
 
+let prop_filter pred (ls: int list) =
+    List.filter pred ls = filter pred ls
+
+do Check.Quick prop_filter
+
+let prop_filter_len pred (ls: int list) =
+    List.length (filter pred ls) <= List.length ls
+
+do Check.Quick prop_filter_len
+
