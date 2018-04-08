@@ -81,3 +81,6 @@ let divisori n = filter (fun x -> n % x = 0) [1..n]
 // Es 5.2
 let isPrime n = divisori n = [1; n]
 
+// Es 5.3
+let primes n = filter isPrime [1..n]
+
