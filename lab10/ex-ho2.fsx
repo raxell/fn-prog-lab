@@ -25,3 +25,12 @@ let prop_unzip ls =
 
 do Check.Quick prop_unzip
 
+// Es 1.4
+let sum_len ls = List.foldBack (fun x (sum, len) -> (x + sum, len + 1)) ls (0, 0)
+
+let prop_sum_len ls =
+    let (sum, len) = sum_len ls
+    List.sum ls = sum && List.length ls = len
+
+do Check.Quick prop_sum_len
+
