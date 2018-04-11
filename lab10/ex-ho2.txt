@@ -1,0 +1,83 @@
+(* 1. Definire mediante foldBack le seguenti funzioni  e controllare equivalenza mediante FsCheck
+
+// 1.1 List.concat: ('a list) list -> 'a list
+
+ let listResult = List.concat [ [1; 2; 3]; [4; 5; 6]; [7; 8; 9] ];;
+
+>> val listResult : int list = [1; 2; 3; 4; 5; 6; 7; 8; 9]
+
+
+// 1.2 List.filter : ('a -> bool) -> 'a list -> 'a list
+
+// 1.3  Definire la funzione unzip : ('a * 'b) list -> 'a list * 'b list che
+   data la lista di coppie  [(x1,y1) ; (x2,y2) ; ... ; (xn,yn)] 
+   restituisce la coppia di liste  ([x1;...;xn] , [y1;...;yn])
+
+
+Esempio:
+
+let unz1 = unzip [ (1, "Anna") ; (2, "Barbara") ; (3, "Carlo") ; (4, "Davide") ]
+
+// val unz1 : int list * string list = ( [1; 2; 3; 4] , ["Anna"; "Barbara"; "Carlo"; "Davide"] )
+
+Suggerimento: scrivere la ricorsione esplicita e poi astrarre
+*)
+
+1.4 Scrivere una funzione via foldBack che simultaneamente computa la somma e la lunghezza di una lista di interi
+
+sum_len : int list -> int * int
+
+(* 2.
+
+Vi sono dei casi in cui l'operazione che intendiamo implementare opera
+su una list **NON* vuota
+
+es: List.min : ('a list -> 'a) when 'a : comparison
+
+In questo caso si può usare la funzione List.reduceBack, che è simile a
+foldBack, ma lavora solo su liste non vuote e su un tipo solo T, e usa
+l'ultimo elemento della lista per terminare la ricorsione (no neutro)
+
+ List.reduceBack : ('T -> 'T -> 'T) -> 'T list -> 'T
+
+"Applies a function to each element of the collection, threading an
+accumulator argument through the computation.  If the input function
+is f and the elements are i0...iN, then this function computes
+     	     f i0 (...(f iN-1 iN))."
+
+   *)
+
+
+// dato  min : ('a -> 'a -> 'a) when 'a : comparison
+let minlist xs = List.reduceBack min xs
+
+// 2.1 Definire per ricorsione esplicita la funzione reduceBack
+// e usarla per implemenare la funzione last : 'a list -> 'a
+// che ritorna l'ultimo elemento di una lista non vuota
+
+// 2.2 verificare con FsCheck equivalenza tra vostra reduceBack e quella di libreria
+
+// 2.3 Infine definire reduceBack via foldBack (Suggerimento: si usi List.last come neutro)
+
+
+// 3. Catamorfisimi
+
+Data questa definizione di numeri naturali
+
+type n = Z | S of n   
+
+defininire la funzione fold-like nfold di tipo
+
+ (fs : ('a -> 'a) -> fz : 'a -> x: n -> 'a) 
+
+Grazie ad essa definire la funzione somma sui naturali
+
+let sum x y = ...
+        
+let s = sum (S Z)  (S Z) // (S (S Z))        
+
+e una tostring
+
+let tostring n = ...
+
+che trasforma  (S (S Z))  in  "0 + 1 + 1"
