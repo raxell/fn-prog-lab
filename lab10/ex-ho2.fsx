@@ -9,3 +9,11 @@ let prop_concat ls =
 
 do Check.Quick prop_concat
 
+// Es 1.2
+let filter p ls = List.foldBack (fun x acc -> if p x then x :: acc else acc) ls []
+
+let prop_filter p ls =
+    List.filter p ls = filter p ls
+
+do Check.Quick prop_filter
+
