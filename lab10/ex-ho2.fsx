@@ -49,3 +49,15 @@ let prop_reduceBack f ls =
 
 do Check.Quick prop_reduceBack
 
+// Es 3
+type n = Z | S of n
+
+let rec nfold fs fz x =
+    match x with
+    | Z -> fz
+    | S n -> nfold fs (fs fz) n
+
+let sum x y = nfold (fun n -> S(n)) x y
+
+let tostring n = nfold (fun x -> x + " + 1") "0" n
+
