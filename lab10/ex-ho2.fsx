@@ -43,3 +43,9 @@ let rec reduceBack f ls =
 
 let last ls = reduceBack (fun x y -> y) ls
 
+// Es 2.2
+let prop_reduceBack f ls =
+    ls <> [] ==> lazy (List.reduceBack f ls = reduceBack f ls)
+
+do Check.Quick prop_reduceBack
+
