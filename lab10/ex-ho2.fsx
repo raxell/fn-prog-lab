@@ -34,3 +34,12 @@ let prop_sum_len ls =
 
 do Check.Quick prop_sum_len
 
+// Es 2.1
+let rec reduceBack f ls =
+    match ls with
+    | [hd] -> hd
+    | hd :: tl -> f hd (reduceBack f tl)
+    | _ -> failwith "The input list was empty"
+
+let last ls = reduceBack (fun x y -> y) ls
+
