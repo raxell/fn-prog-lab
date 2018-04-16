@@ -44,3 +44,24 @@ let prop_map f ls =
 
 do Check.Quick prop_map
 
+// Es 2
+let rec sumRange a b =
+    match a <= b with
+    | true -> a + sumRange (a + 1) b
+    | _ -> 0
+
+let itSumRange a b =
+    let rec auxSumRange acc a b =
+        match a <= b with
+        | true -> auxSumRange (a + acc) (a + 1) b
+        | _ -> acc
+    auxSumRange 0 a b
+
+let prop_sumRange a b =
+    a <= b ==> lazy (
+        let sum = [a .. b] |> List.sum
+        sumRange a b = sum && sum = itSumRange a b
+    )
+
+do Check.Quick prop_sumRange
+
