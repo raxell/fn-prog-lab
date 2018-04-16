@@ -1,0 +1,171 @@
+*** ESERCIZI SU FUNZIONI ITERATIVE  ***
+
+ESERCIZIO 1
+===========
+
+Per ciascuna delle seguenti funzioni su liste, dare:
+- Una definizione iterativa, usando ricorsione e eventuali accumulatori
+- Una definizione iterativa mediante fold; se non e' possibile usare fold,
+  usare la funzione foldBack (che pero' non e' ricorsiva in coda).
+  
+
+
+   List.sum :  int list -> int                         // somma elementi di una lista di int
+List.length :  'a list -> int                          // lunghezza di una lista
+   List.map :  ('a -> 'b) -> 'a list -> 'b lis         // map su lista
+
+Verificare l'equivalenza delle funzioni definite con quella del modulo List usando FsCheck.
+
+Ad esempio, per List.sum vanno definite le funzioni
+
+   itSum : int list -> int     // definizione iterativa della somma con accumulatore
+
+   itfSum : int list -> int     // definizione iterativa della somma con  fold
+
+Per definire itSum, occorre definire localmente una  funzione ricorsiva itSum_aux
+avente un parametro acc in cui viene accumulata la somma.
+
+Con FsCheck, va controllato che entrambe le funzioni sono equivalenti a List.sum.
+
+
+__________________________________________________________________________________________________
+
+ESERCIZIO 2
+===========
+
+i) Definire la funzione ricorsiva
+
+   sumRange :  int -> int -> in
+
+che calcola la somma degli interi compresi fra due interi.
+Piu' precisamente, dati due interi a e b tali che a <= b, deve valere:
+
+    sumRange a  b  =  a + (a+1) + (a+2)  + ... + b
+
+Esempi:
+
+sumRange 5 10  = 5 + 6 + 7 + 8 + 9 + 10
+               = 45
+
+sumRange -2 1  = (-2) + (-1) + 0 + 1
+               = -2
+
+ii) Definire la versione iterativa di sumRange
+
+   itSumRange : int -> int -> int
+
+Verificare l'equivalenza di sumRange e itSumRange con FsCheck;
+attenzione alle precondizioni sui parametri a e b !
+
+
+_______________________________________________________________________________________
+
+
+ESERCIZIO 3
+===========
+
+Definire le funzioni
+
+    fib :  int -> int    // ricorsiva
+  itFib :  int -> in     // versione iterativa di fib
+
+che, dato n>= 0, calcolano l'n-esimo numero Fn della successione di Fibonacci.
+Si ricorda che
+
+        F0  =  0
+        F1  =  1 
+    F(n+2)  =  F(n)  + F(n+1)
+
+
+Suggerimento
+^^^^^^^^^^^^
+
+Per definire la versione iterativa, pensare a come va scritto un ciclo che calcola F(n)
+usando due variabili.
+Per simulare il ciclo, occorre usare due accumulatori.
+
+*******
+
+
+Per verificare l'equivalenza con FsCheck, occorre limitare il valore dell'argomento di fib,
+altrimenti si ottengono valori troppo grandi (i numeri di Fibonacci crescono un modo esponenziale).
+
+Usare la seguente proprieta', che, dato un intero n,  effettua il test
+
+     fib k = itFib k 
+
+dove k e' un intero compreso fra 0 e n
+
+
+// verifica che  fib k = itFib k, con 0 <= k <= n
+let prop_fib n =
+  let smallPosIntGen n =
+    Arb.filter (fun x -> 0 <= x && x <= n ) Arb.from<int>
+  Prop.forAll (smallPosIntGen  n ) (fun k ->  fib k = itFib k )
+
+do Check.Quick (prop_fib 30)  // considera interi k compresi fra 0 e 30
+
+_______________________________________________________________________________________
+
+
+ESERCIZIO 4 
+===========
+
+Siano dati una  lista xs e un predicato pred aventi tipo
+
+    pred : 'a -> bool      xs : 'a list
+
+Immaginiamo di attraversare la lista partendo dal primo elemento e che la lista
+scoppi quando si incontra un elemento che non verifica il predicato pred.
+Ad esempio, supponiamo di attraversare liste di interi usando  il predicato 
+
+    even  : int -> bool
+
+tale che
+
+even n = true    se  n e' pari  
+         false   altrimenti
+
+Allora:
+
+la lista  [2;4;5;8]     scoppia in 5
+la lista  [2;4;20;8]    non scoppia
+la lista  [1;2;4;5;8]   scoppia in 1
+la lista vuota non scoppia
+
+Per rappresentare l'esito dell'attraversamento di una lista xs definiamo il tipo
+
+type 'a outcome  =
+    | Good of 'a list   // Good xs  :  la lista xs  non scoppia
+    | Boom of 'a        // Boom x   :  la lista scoppia nell'elemento x
+
+
+i) Definire la funzione *ricorsiva*
+
+  traverse : pred:('a -> bool) -> xs:'a list -> 'a outcome
+
+che restituisce l'esito dell'attraversamento della lista xs usando predicato pred
+
+Esempi:
+
+// even : int -> bool
+let even n = ....  // *** DA DEFINIRE ***
+
+let out1 = traverse even ([] : int list)  //  Good []
+let out2 = traverse even [2;4;5;8]        //  Boom 5
+let out3 = traverse even [2;4;20;8]       //  Good [2; 4; 20; 8] 
+let out4 = traverse even [1;2;4;5;8]      //  Boom 1
+
+ii) Definire la versione iterativa di traverse
+
+  itTraverse : pred:('a -> bool) -> xs:'a list -> 'a outcome  
+
+Esempi:
+
+let outit1 = itTraverse even ([] : int list)  //  Good []
+let outit2 = itTraverse even [2;4;5;8]        //  Boom 5
+let outit3 = itTraverse even [2;4;20;8]       //  Good [2; 4; 20; 8] 
+let outit4 = itTraverse even [1;2;4;5;8]      //  Boom 1
+
+
+Confrontare le due versioni con FsCheck.
