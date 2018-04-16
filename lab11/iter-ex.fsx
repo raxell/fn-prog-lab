@@ -30,3 +30,17 @@ let prop_length ls =
 
 do Check.Quick prop_length
 
+let itMap f ls =
+    let rec auxMap acc fx xs =
+        match xs with
+        | [] -> acc
+        | hd :: tl -> auxMap (fx hd :: acc) fx tl
+    auxMap [] f ls |> List.rev
+
+let itfMap f ls = List.foldBack (fun x acc -> f x :: acc) ls []
+
+let prop_map f ls =
+    itMap f ls = List.map f ls && List.map f ls = itfMap f ls
+
+do Check.Quick prop_map
+
