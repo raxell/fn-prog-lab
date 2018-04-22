@@ -65,3 +65,23 @@ let prop_sumRange a b =
 
 do Check.Quick prop_sumRange
 
+// Es 3
+let rec fib n =
+    match n with
+    | x when x > 1 -> fib (x - 1) + fib (x - 2)
+    | _ -> n
+
+let itFib n =
+    let rec auxFib acc1 acc2 m =
+        match m with
+        | 0 ->  acc1
+        | _ -> auxFib acc2 (acc1 + acc2) (m - 1)
+    auxFib 0 1 n
+
+let prop_fib n =
+    let smallPosIntGen n =
+        Arb.filter (fun x -> 0 <= x && x <= n ) Arb.from<int>
+    Prop.forAll (smallPosIntGen  n ) (fun k ->  fib k = itFib k )
+
+do Check.Quick (prop_fib 30)
+
