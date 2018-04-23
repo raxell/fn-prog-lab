@@ -48,6 +48,7 @@ let test_set x (xs : int list) ys =
     (union  (ofList xs) (ofList ys) |> toList |> List.sort) =
        (Set.union  (Set.ofList xs)  (Set.ofList ys)|> Set.toList) |@ "union"
     (ofList xs |> toList |> List.sort ) = (Set.ofList xs |> Set.toList) |@ "list"
+    (ofList xs |> count) = (Set.ofList xs |> Set.count) |@ "count"
     ]
 
 do Check.Quick test_set

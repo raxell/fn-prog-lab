@@ -45,8 +45,7 @@ let ofList ss = unioni (S ss) empty;;
 
 let wrong = S ([1;1]);;
 
-
-
+let count (S ss) = List.length ss
 
 
 

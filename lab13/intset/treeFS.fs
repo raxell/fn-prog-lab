@@ -47,6 +47,6 @@ let ofList list = List.fold (fun t x -> add x t ) Leaf list
 // preorder here
 let toList tree  = fold_treeBack (fun x l r -> x :: l @ r) tree []
 
-
+let count s = toList s |> List.length
 
 

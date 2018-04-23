@@ -25,3 +25,5 @@ val union : IFSet -> IFSet -> IFSet
 val ofList :  int list -> IFSet 
 
 val toList :  IFSet  -> int list 
+
+val count : IFSet -> int
