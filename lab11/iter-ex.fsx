@@ -85,3 +85,30 @@ let prop_fib n =
 
 do Check.Quick (prop_fib 30)
 
+// Es 4
+type 'a outcome =
+    | Good of 'a list
+    | Boom of 'a
+
+let rec traverse pred xs =
+    match xs with
+    | [] -> Good([])
+    | hd :: tl ->
+        match (pred hd, traverse pred tl) with
+        | (true, Good(ys)) -> Good(hd :: ys)
+        | (true, x) -> x
+        | _ -> Boom(hd)
+
+let rec itTraverse pred xs =
+    let rec auxTraverse acc pred xs =
+        match xs with
+        | [] -> Good(List.rev acc)
+        | hd :: tl ->
+            if pred hd then auxTraverse (hd :: acc) pred tl else Boom(hd)
+    auxTraverse [] pred xs
+
+let prop_traverse pred xs =
+    traverse pred xs = itTraverse pred xs
+
+do Check.Quick prop_traverse
+
